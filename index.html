@@ -375,7 +375,7 @@
 
   @media (max-width: 1024px) {
     .hero-inner { grid-template-columns: 1fr; }
-    .hero-right { padding: 2rem 0 0; justify-content: flex-start; }
+    .hero-right { padding: 2rem 0 0; justify-content: center; align-items: center; }
     .hero-right::before { width: min(70vw, 320px); height: min(70vw, 320px); }
     .hero-rating__num { font-size: clamp(6rem, 20vw, 9rem); }
     .hero-rating__location { font-size: 1.3rem; letter-spacing: 3px; }
@@ -750,6 +750,10 @@
     font-size: 0.9rem;
     color: var(--muted);
     padding: 0.5rem 0;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
     padding-left: 1.5rem;
     position: relative;
     line-height: 1.5;
@@ -758,11 +762,11 @@
 
   .service-list li::before {
     content: '✓';
-    position: absolute;
-    left: 0;
     color: var(--neon);
     font-weight: bold;
     font-size: 0.9rem;
+    flex-shrink: 0;
+    line-height: 1.5;
   }
 
   .service-card:hover .service-list li {
@@ -1935,7 +1939,6 @@
     .nav-links li { flex: 0 0 auto; }
     .nav-links a { font-size: 0.75rem; letter-spacing: 2px; color: var(--white); font-weight: 600; }
     .services { padding: 4rem 1rem; }
-    .section-header { margin-bottom: 2.5rem; flex-direction: column; gap: 2rem; }
     .section-header > div { margin-right: 0; margin-bottom: 0; text-align: center; }
     .section-title { font-size: 2.2rem; text-align: center; }
     .section-badge { height: 140px; margin: 1rem auto 0; }
@@ -1945,7 +1948,9 @@
     .service-header { padding: 2rem 1.5rem 1rem; text-align: center; }
     .service-name { font-size: 1.8rem; letter-spacing: 1px; margin-bottom: 0.6rem; }
     .price-box { margin: 1.5rem 0; padding: 2rem 1rem; }
-    .price-amount { font-size: 4rem; margin-top: 1rem; }
+    .price-amount { font-size: 3.8rem; margin-top: 1rem; letter-spacing: -1px; }
+    .service-list li { font-size: 0.9rem; padding: 0.5rem 0; }
+    .service-list li::before { margin-right: 0.5rem; min-width: 16px; }
     .service-body { padding: 0 1.5rem; }
     .service-list li { font-size: 0.85rem; padding: 0.4rem 0; }
     .service-footer { padding: 0 1.5rem 1.5rem; }
@@ -1955,9 +1960,11 @@
       padding: 150px 1rem 3rem;
     }
     .hero-tag { letter-spacing: 4px; font-size: 0.62rem; }
-    .hero-title { font-size: clamp(2.6rem, 16vw, 4.8rem); }
-    .hero-subtitle { font-size: clamp(1.3rem, 7vw, 2.4rem); letter-spacing: 3px; }
-    .hero-desc { font-size: 0.9rem; line-height: 1.6; margin-bottom: 2rem; }
+    .hero-title { font-size: clamp(2.6rem, 16vw, 4.8rem); text-align: center; }
+    .hero-subtitle { font-size: clamp(1.3rem, 7vw, 2.4rem); letter-spacing: 3px; text-align: center; }
+    .hero-desc { font-size: 0.9rem; line-height: 1.6; margin-bottom: 2rem; text-align: center; }
+    .hero-left { align-items: center; text-align: center; }
+    .hero-tag { justify-content: center; }
     .hero-ctas {
       width: 100%;
       flex-direction: column;
@@ -1982,18 +1989,22 @@
       gap: 1rem;
       border-top: 1px solid rgba(240,235,227,0.08);
       padding-top: 1.5rem;
+      justify-items: center;
     }
     .stat {
       margin: 0;
       padding: 0;
       border: none;
+      text-align: center;
     }
     .stat-num { font-size: 3rem; }
+    .stat-label { text-align: center; }
     .section-header {
       flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
       gap: 1rem;
       margin-bottom: 2.5rem;
+      text-align: center;
     }
     .services,
     .work,
@@ -2005,8 +2016,8 @@
     .service-link { opacity: 1; transform: none; }
     .about-content { padding: 3rem 1.5rem; text-align: center; align-items: center; }
     .about-logo-wrap { justify-content: center; }
-    .feature-list { align-items: center; }
-    .btn-primary { width: 100%; }
+    .feature-list { align-items: flex-start; width: 100%; }
+    .about-content .btn-primary { width: 100%; text-align: center; }
     .about-visual { min-height: 320px; }
     .about-logo { max-width: 160px; }
     .about-title { font-size: clamp(3.2rem, 9vw, 4.5rem); margin-bottom: 2rem; }
@@ -2037,8 +2048,10 @@
     .recognition::after { font-size: 5rem; letter-spacing: 5px; }
     .recog-title { font-size: clamp(2.8rem, 12vw, 4rem); }
     .recog-body { font-size: 0.9rem; line-height: 1.75; }
-    .recog-image-wrap { grid-template-columns: 1fr; }
+    .recog-image-wrap { grid-template-columns: 1fr; justify-items: center; }
     .recog-cert-item:nth-child(2) { margin-top: 0; }
+    .recog-inner { text-align: center; }
+    .recog-divider, .recog-badges { justify-content: center; }
     footer { padding: 2.5rem 1rem; }
     .footer-logo { font-size: 1.6rem; letter-spacing: 4px; }
     .brand-badge { min-width: 82px; padding: 0.95rem 0.7rem; }
@@ -2274,7 +2287,7 @@
   </div>
 
   <!-- SERVICES GRID -->
-  <div class="services-grid" style="grid-template-columns: repeat(2, 1fr);">
+  <div class="services-grid">
 
     <!-- BIKE SERVICE -->
 
