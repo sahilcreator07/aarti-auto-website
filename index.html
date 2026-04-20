@@ -77,25 +77,37 @@
   }
 
   .nav-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.6rem;
-    letter-spacing: 4px;
-    color: var(--white);
+    display: flex;
+    align-items: center;
     text-decoration: none;
+    height: 70px;
   }
-  .nav-logo span { color: var(--neon); }
+  .logo-img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    transition: transform 0.3s ease;
+  }
+  .nav-logo:hover .logo-img {
+    transform: scale(1.05);
+  }
 
   .nav-links { display: flex; gap: 2.5rem; list-style: none; }
   .nav-links a {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.95rem;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: var(--muted);
+    color: var(--white);
     text-decoration: none;
-    transition: color 0.3s;
+    transition: all 0.3s ease;
+    font-weight: 600;
   }
-  .nav-links a:hover { color: var(--neon); }
+  .nav-links a:hover {
+    color: var(--neon);
+    text-shadow: 0 0 15px rgba(255, 107, 0, 0.6);
+  }
 
   .nav-cta {
     font-family: 'Barlow Condensed', sans-serif;
@@ -104,12 +116,31 @@
     text-transform: uppercase;
     color: var(--dark);
     background: var(--neon);
-    border: none;
+    border: 2px solid rgba(255, 255, 255, 0.8);
     padding: 0.6rem 1.5rem;
     cursor: none;
-    transition: background 0.3s, transform 0.2s;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.2);
+    animation: cta-glow 2.5s ease-in-out infinite;
   }
-  .nav-cta:hover { background: var(--amber); transform: translateY(-1px); }
+
+  @keyframes cta-glow {
+    0%, 100% {
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.8);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.7), inset 0 0 15px rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 1);
+    }
+  }
+
+  .nav-cta:hover {
+    background: var(--amber);
+    transform: translateY(-1px);
+    border-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.4);
+  }
 
   /* HERO */
   .hero {
@@ -345,7 +376,9 @@
   @media (max-width: 1024px) {
     .hero-inner { grid-template-columns: 1fr; }
     .hero-right { padding: 2rem 0 0; justify-content: flex-start; }
+    .hero-right::before { width: min(70vw, 320px); height: min(70vw, 320px); }
     .hero-rating__num { font-size: clamp(6rem, 20vw, 9rem); }
+    .hero-rating__location { font-size: 1.3rem; letter-spacing: 3px; }
   }
 
   .hero-tag {
@@ -518,8 +551,16 @@
   }
 
   .section-header {
-    display: flex; align-items: flex-end; justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 5rem;
+    position: relative;
+    gap: 6rem;
+  }
+
+  .section-header > div {
+    flex: 0 0 auto;
   }
 
   .section-tag {
@@ -538,6 +579,16 @@
     color: var(--white);
   }
 
+  .section-badge {
+    height: 220px;
+    width: auto;
+    object-fit: contain;
+    margin-left: auto;
+    margin-right: 0;
+    flex: 0 0 auto;
+    filter: drop-shadow(0 15px 35px rgba(196, 75, 27, 0.4));
+  }
+
   .section-desc {
     font-size: 0.9rem;
     font-weight: 300;
@@ -545,24 +596,213 @@
     max-width: 300px;
     line-height: 1.7;
     text-align: right;
+    flex: 0 0 auto;
   }
 
-  /* ── NEW SERVICES GRID ── */
+  .work-desc {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--white);
+    letter-spacing: 1px;
+    line-height: 1.8;
+    max-width: 400px;
+    font-style: italic;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,107,0,0.05));
+    padding: 1.5rem;
+    border-left: 3px solid var(--neon);
+    border-radius: 4px;
+  }
+
+  /* ── SERVICES GRID ── */
   .services-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
   }
 
   .service-card {
-    background: var(--charcoal);
-    padding: 2.2rem 2rem;
+    background: linear-gradient(135deg, rgba(30, 30, 28, 0.8), rgba(20, 20, 18, 0.9));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .service-card:hover {
+    border-color: rgba(196, 75, 27, 0.5);
+    box-shadow: 0 20px 50px rgba(196, 75, 27, 0.15);
+    transform: translateY(-8px);
+  }
+
+  .service-header {
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+  }
+
+  .service-icon-wrap {
+    display: none;
+  }
+
+  .service-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--white);
+    letter-spacing: 2px;
+    margin-bottom: 0.8rem;
+    line-height: 1.2;
+  }
+
+  .service-duration {
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 600;
+  }
+
+  .price-box {
+    background: linear-gradient(135deg, var(--rust) 0%, var(--amber) 100%);
+    padding: 3rem 2rem;
+    text-align: center;
+    margin: 2rem 0;
+    border-radius: 12px;
+    box-shadow: 0 15px 40px rgba(196, 75, 27, 0.5), 0 0 30px rgba(232, 130, 12, 0.3);
     position: relative;
     overflow: hidden;
-    cursor: none;
-    border: 1px solid rgba(255,255,255,0.04);
-    transition: border-color 0.4s, transform 0.4s, box-shadow 0.4s;
-    transform-origin: center bottom;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .price-box::before {
+    content: 'SPECIAL OFFER SPECIAL OFFER SPECIAL OFFER SPECIAL OFFER SPECIAL OFFER SPECIAL OFFER SPECIAL OFFER SPECIAL OFFER SPECIAL OFFER SPECIAL OFFER';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    letter-spacing: 8px;
+    color: rgba(255, 255, 255, 0.08);
+    word-wrap: break-word;
+    overflow: hidden;
+    white-space: pre-wrap;
+    line-height: 1.3;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .price-box::after {
+    content: '';
+    display: none;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { text-shadow: 0 0 15px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 165, 0, 0.6), 0 3px 8px rgba(0,0,0,0.4); }
+    50% { text-shadow: 0 0 25px rgba(255, 215, 0, 1), 0 0 50px rgba(255, 165, 0, 0.8), 0 3px 12px rgba(0,0,0,0.5); }
+  }
+
+  .price-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5.8rem;
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-top: 1.5rem;
+    font-weight: 700;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    position: relative;
+    z-index: 1;
+  }
+
+  .price-subtext {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.95);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 0.8rem;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+  }
+
+  .service-body {
+    padding: 0 2rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .service-list {
+    list-style: none;
+    margin: 1.5rem 0;
+    flex-grow: 1;
+  }
+
+  .service-list li {
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.9rem;
+    color: var(--muted);
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    line-height: 1.5;
+    transition: color 0.3s;
+  }
+
+  .service-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--neon);
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+
+  .service-card:hover .service-list li {
+    color: var(--white);
+  }
+
+  .service-note {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin: 1rem 0;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  .service-footer {
+    padding: 0 2rem 2rem;
+  }
+
+  .service-link {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--rust);
+    padding: 0.7rem 1.8rem;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    box-shadow: 0 6px 15px rgba(196, 75, 27, 0.3);
+  }
+
+  .service-link:hover {
+    background: var(--amber);
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(196, 75, 27, 0.4);
   }
 
   /* animated gradient spotlight on hover */
@@ -683,6 +923,46 @@
     position: relative;
     background: var(--brick);
     overflow: hidden;
+    height: 100%;
+  }
+
+  /* Pinterest-style workshop grid */
+  .workshop-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(200px, 1fr);
+    gap: 0.8rem;
+    padding: 0.8rem;
+    height: 100%;
+    width: 100%;
+  }
+
+  .workshop-grid-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    min-height: 0;
+  }
+
+  .workshop-grid-item--large {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .workshop-grid-item--large-alt {
+    grid-column: span 2;
+  }
+
+  .grid-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+  }
+
+  .workshop-grid-item:hover .grid-image {
+    transform: scale(1.05);
   }
 
   /* Stylized workshop interior */
@@ -814,38 +1094,63 @@
     justify-content: center;
   }
 
-  .about-content .section-tag { margin-bottom: 1rem; }
+  .about-logo-wrap {
+    margin-bottom: 3rem;
+    display: flex; align-items: center;
+  }
+
+  .about-logo {
+    max-width: 200px;
+    height: auto;
+  }
+
+  .about-content .section-tag { display: none; }
 
   .about-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3rem, 5vw, 4.5rem);
-    line-height: 0.95;
+    font-size: clamp(4.2rem, 7vw, 5.8rem);
+    line-height: 0.9;
     color: var(--white);
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
+    letter-spacing: 2px;
   }
 
   .about-body {
-    font-size: 0.9rem;
+    font-size: 1.05rem;
     font-weight: 300;
-    color: var(--muted);
-    line-height: 1.8;
+    color: rgba(240, 235, 227, 0.85);
+    line-height: 1.9;
     margin-bottom: 3rem;
-    max-width: 420px;
+    max-width: 480px;
   }
 
   .feature-list {
     list-style: none;
-    display: flex; flex-direction: column; gap: 1rem;
+    display: flex; flex-direction: column; gap: 1.2rem;
     margin-bottom: 3rem;
   }
 
   .feature-item {
     display: flex; align-items: center; gap: 1rem;
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--white);
+  }
+
+  .feature-item::before {
+    content: '✓';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    border: 2px solid var(--rust);
+    color: var(--rust);
+    font-weight: bold;
+    font-size: 0.8rem;
   }
   .feature-item::before {
     content: '';
@@ -873,6 +1178,7 @@
     position: relative;
     overflow: hidden;
     cursor: none;
+    min-height: 220px;
   }
 
   .work-item:first-child { grid-row: 1 / 3; }
@@ -975,11 +1281,17 @@
 
   .testimonial-card {
     padding: 2.5rem;
-    border: 1px solid rgba(240,235,227,0.06);
+    border: 2px solid rgba(255, 255, 255, 0.8);
     position: relative;
-    transition: border-color 0.3s;
+    transition: all 0.3s ease;
+    background: rgba(240, 235, 227, 0.08);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.25), inset 0 0 20px rgba(255, 255, 255, 0.08);
   }
-  .testimonial-card:hover { border-color: rgba(255,107,0,0.3); }
+  .testimonial-card:hover {
+    border-color: rgba(255, 255, 255, 1);
+    background: rgba(240, 235, 227, 0.12);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.4), inset 0 0 25px rgba(255, 255, 255, 0.12);
+  }
 
   .testimonial-stars {
     color: var(--amber);
@@ -991,25 +1303,39 @@
   .testimonial-text {
     font-size: 0.9rem;
     font-weight: 300;
-    color: var(--muted);
+    color: rgba(240, 235, 227, 0.95);
     line-height: 1.8;
     margin-bottom: 2rem;
     font-style: italic;
   }
 
   .testimonial-author {
-    display: flex; align-items: center; gap: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    justify-content: flex-start;
   }
 
   .author-avatar {
-    width: 42px; height: 42px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--rust), var(--amber));
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1.1rem;
     color: var(--dark);
     flex-shrink: 0;
+    margin-top: 0.2rem;
+  }
+
+  .author-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 0.15rem;
   }
 
   .author-name {
@@ -1019,11 +1345,14 @@
     letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--white);
+    margin: 0;
+    line-height: 1;
   }
   .author-type {
     font-size: 0.75rem;
-    color: var(--muted);
-    margin-top: 0.2rem;
+    color: rgba(240, 235, 227, 0.75);
+    margin: 0.2rem 0 0 0;
+    line-height: 1;
   }
 
   /* BOOKING */
@@ -1253,16 +1582,19 @@
 
   .work-placeholder-img--logo {
     margin: 0;
-    padding: 2rem 3rem;
+    padding: 0;
     border: none;
     background: rgba(255,255,255,0.02);
     gap: 0;
     justify-content: center;
+    overflow: hidden;
   }
 
   .work-item-logo {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
     filter: drop-shadow(0 12px 30px rgba(0,0,0,0.6));
   }
 
@@ -1423,7 +1755,7 @@
 
   .recog-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-size: clamp(3.8rem, 7vw, 6.5rem);
     line-height: 0.92; color: var(--white); margin-bottom: 1.5rem;
   }
   .recog-title span { color: var(--neon); }
@@ -1466,7 +1798,15 @@
 
   /* Image frame */
   .recog-image-wrap {
-    display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .recog-cert-item:nth-child(2) {
+    margin-top: clamp(80px, 12vw, 200px);
   }
 
   .recog-image-frame {
@@ -1507,6 +1847,15 @@
     text-align: center; line-height: 1.5; letter-spacing: 0.5px;
   }
 
+  .recog-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
   .recog-image-glow {
     position: absolute; inset: 0;
     background: radial-gradient(ellipse at 50% 100%, rgba(255,107,0,0.08) 0%, transparent 60%);
@@ -1515,36 +1864,213 @@
   }
 
   .recog-cert-label {
-    display: flex; align-items: center; gap: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--muted);
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--white);
+    font-weight: 600;
   }
 
   /* Responsive */
   @media (max-width: 1024px) {
-    .recog-inner { grid-template-columns: 1fr; gap: 3rem; }
-    .recog-image-frame { max-width: 280px; }
-    .recognition { padding: 5rem 2rem; }
-  }
-
-  /* Responsive adjustments */
-  @media (max-width: 1024px) {
-    nav { padding: 1.5rem 2rem; }
-    .hero { padding: 0 2rem 4rem; }
+    nav { padding: 1rem 2rem; gap: 1rem; }
+    .nav-logo { height: 60px; }
+    .nav-links { gap: 1.2rem; }
     .services { padding: 6rem 2rem; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+    .service-card { padding: 1.5rem; }
+    .price-box { margin: 1.5rem 0; padding: 2rem 1.5rem; }
+    .price-amount { font-size: 4.8rem; }
+    .hero { padding: 130px 2rem 4rem; }
+    .hero-subtitle { letter-spacing: 5px; }
+    .hero-ctas { flex-wrap: wrap; }
+    .stats-bar { margin-top: 2rem; }
+    .services,
+    .work,
+    .testimonials,
+    .recognition,
+    .booking { padding: 6rem 2rem; }
+    .section-header { margin-bottom: 3rem; }
+    .section-desc { text-align: left; max-width: 100%; }
     .services-grid { grid-template-columns: 1fr 1fr; }
     .service-card[style*="span 2"] { grid-column: span 2; }
-    .about { grid-template-columns: 1fr; }
-    .about-visual { min-height: 400px; }
-    .work { padding: 6rem 2rem; }
-    .work-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .about { grid-template-columns: 1fr; min-height: auto; }
+    .about-visual { min-height: 500px; height: auto; }
+    .about-logo { max-width: 180px; }
+    .about-title { font-size: clamp(3.8rem, 6vw, 5.2rem); }
+    .about-content { padding: 4rem 2.5rem; }
+    .work-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: minmax(220px, auto); }
     .work-item:first-child { grid-row: auto; }
-    .testimonials { padding: 6rem 2rem; }
     .testimonials-grid { grid-template-columns: 1fr; }
-    .booking { grid-template-columns: 1fr; gap: 4rem; padding: 6rem 2rem; }
+    .booking { grid-template-columns: 1fr; gap: 4rem; }
+    .recog-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .recog-image-frame { max-width: 280px; }
+    .recognition::after { font-size: 10rem; }
     footer { padding: 3rem 2rem; }
     .footer-top { flex-direction: column; gap: 2rem; align-items: flex-start; }
+  }
+
+  @media (max-width: 768px) {
+    nav {
+      padding: 0.8rem 1rem 0.75rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .nav-logo { height: 55px; }
+    .nav-cta { display: none; }
+    .nav-links {
+      width: 100%;
+      gap: 0.9rem;
+      justify-content: space-between;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding-bottom: 0.15rem;
+      scrollbar-width: none;
+    }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-links li { flex: 0 0 auto; }
+    .nav-links a { font-size: 0.75rem; letter-spacing: 2px; color: var(--white); font-weight: 600; }
+    .services { padding: 4rem 1rem; }
+    .section-header { margin-bottom: 2.5rem; flex-direction: column; gap: 2rem; }
+    .section-header > div { margin-right: 0; margin-bottom: 0; text-align: center; }
+    .section-title { font-size: 2.2rem; text-align: center; }
+    .section-badge { height: 140px; margin: 1rem auto 0; }
+    .section-desc { display: none; }
+    .services-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .service-card { border-radius: 8px; }
+    .service-header { padding: 2rem 1.5rem 1rem; text-align: center; }
+    .service-name { font-size: 1.8rem; letter-spacing: 1px; margin-bottom: 0.6rem; }
+    .price-box { margin: 1.5rem 0; padding: 2rem 1rem; }
+    .price-amount { font-size: 4rem; margin-top: 1rem; }
+    .service-body { padding: 0 1.5rem; }
+    .service-list li { font-size: 0.85rem; padding: 0.4rem 0; }
+    .service-footer { padding: 0 1.5rem 1.5rem; }
+    .service-link { font-size: 0.75rem; padding: 0.6rem 1.5rem; }
+    .hero {
+      min-height: auto;
+      padding: 150px 1rem 3rem;
+    }
+    .hero-tag { letter-spacing: 4px; font-size: 0.62rem; }
+    .hero-title { font-size: clamp(2.6rem, 16vw, 4.8rem); }
+    .hero-subtitle { font-size: clamp(1.3rem, 7vw, 2.4rem); letter-spacing: 3px; }
+    .hero-desc { font-size: 0.9rem; line-height: 1.6; margin-bottom: 2rem; }
+    .hero-ctas {
+      width: 100%;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.8rem;
+    }
+    .btn-primary,
+    .btn-secondary {
+      width: 100%;
+      text-align: center;
+      padding: 0.9rem 1.2rem;
+      letter-spacing: 3px;
+    }
+    .neon-badge--combined { width: 100%; padding: 0.75rem 0.9rem; }
+    .neon-badge__inner { width: 100%; justify-content: space-between; gap: 0.8rem; }
+    .neon-badge__num { font-size: 2rem; }
+    .neon-badge__title { font-size: 1.05rem; letter-spacing: 2px; }
+    .scroll-indicator { display: none; }
+    .stats-bar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      border-top: 1px solid rgba(240,235,227,0.08);
+      padding-top: 1.5rem;
+    }
+    .stat {
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+    .stat-num { font-size: 3rem; }
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .services,
+    .work,
+    .testimonials,
+    .recognition,
+    .booking { padding: 4.5rem 1rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .service-card[style*="span 2"] { grid-column: auto; }
+    .service-link { opacity: 1; transform: none; }
+    .about-content { padding: 3rem 1.5rem; text-align: center; align-items: center; }
+    .about-logo-wrap { justify-content: center; }
+    .feature-list { align-items: center; }
+    .btn-primary { width: 100%; }
+    .about-visual { min-height: 320px; }
+    .about-logo { max-width: 160px; }
+    .about-title { font-size: clamp(3.2rem, 9vw, 4.5rem); margin-bottom: 2rem; }
+    .about-body { font-size: 0.95rem; margin-left: auto; margin-right: auto; }
+    .workshop-grid { grid-template-columns: repeat(2, 1fr); padding: 0.6rem; gap: 0.6rem; }
+    .workshop-grid-item--large { grid-column: span 2; grid-row: span 1; }
+    .workshop-grid-item--large-alt { grid-column: span 1; }
+    .workshop-overlay { padding: 1.5rem; }
+    .workshop-rack { gap: 0.8rem; }
+    .wrench-icon { font-size: 1.2rem; }
+    .workshop-poster,
+    .glass-cabin { display: none; }
+    .work-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: none;
+      gap: 10px;
+      margin-top: 2rem;
+    }
+    .work-item,
+    .work-item:first-child { grid-row: auto; min-height: 200px; }
+    .work-placeholder-img--logo { padding: 1.25rem; }
+    .work-overlay { opacity: 1; }
+    .work-info { opacity: 1; transform: none; padding: 1.2rem; }
+    .testimonials::after { font-size: 12rem; top: -2rem; left: -1rem; }
+    .testimonial-card { padding: 1.5rem; }
+    .booking { gap: 2.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .recognition::after { font-size: 5rem; letter-spacing: 5px; }
+    .recog-title { font-size: clamp(2.8rem, 12vw, 4rem); }
+    .recog-body { font-size: 0.9rem; line-height: 1.75; }
+    .recog-image-wrap { grid-template-columns: 1fr; }
+    .recog-cert-item:nth-child(2) { margin-top: 0; }
+    footer { padding: 2.5rem 1rem; }
+    .footer-logo { font-size: 1.6rem; letter-spacing: 4px; }
+    .brand-badge { min-width: 82px; padding: 0.95rem 0.7rem; }
+  }
+
+  @media (max-width: 560px) {
+    .hero-right::before { width: min(72vw, 240px); height: min(72vw, 240px); }
+    .hero-rating__num { font-size: clamp(4.8rem, 26vw, 7rem); letter-spacing: -2px; }
+    .hero-rating__stars { font-size: 1.05rem; letter-spacing: 3px; }
+    .hero-rating__location { font-size: 1.05rem; letter-spacing: 2px; }
+    .stats-bar { grid-template-columns: 1fr; }
+    .stat-num { font-size: 2.6rem; }
+    .section-title { font-size: clamp(2.2rem, 13vw, 3.3rem); }
+    .work-item { min-height: 180px; }
+    .work-type { font-size: 0.68rem; }
+    .workshop-grid { grid-template-columns: 1fr; padding: 0.6rem; gap: 0.6rem; grid-auto-rows: minmax(180px, 1fr); }
+    .workshop-grid-item--large { grid-column: span 1; grid-row: span 1; }
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    body { cursor: auto; }
+    .cursor,
+    .cursor-ring { display: none; }
+    .nav-cta,
+    .btn-primary,
+    .btn-secondary,
+    .service-card,
+    .form-input,
+    .form-submit,
+    .work-item,
+    .social-btn,
+    .brand-badge { cursor: pointer; }
   }
 </style>
 </head>
@@ -1555,7 +2081,7 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">AARTI<span> BIKERS</span></a>
+  <a href="#" class="nav-logo"><img src="clean-arti-auto.png" alt="AARTI AUTO Logo" class="logo-img"></a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#about">Workshop</a></li>
@@ -1687,39 +2213,50 @@
         <span class="recog-tag__icon">🏆</span>
         Recognition
       </div>
-      <h2 class="recog-title">PROUDLY<br><span>RECOGNISED</span><br>BY MOBIL</h2>
+      <h2 class="recog-title">PROUDLY<br><span>RECOGNISED</span><br>BY INDUSTRY LEADERS</h2>
       <div class="recog-divider">
         <span class="recog-divider__line"></span>
         <span class="recog-divider__diamond">◆</span>
         <span class="recog-divider__line"></span>
       </div>
-      <p class="recog-body">Aarti Auto Spare Parts is proudly recognized by <strong>Mobil</strong> for delivering quality two-wheeler service and genuine lubrication solutions. This appreciation certificate reflects our commitment to maintaining high service standards, customer satisfaction, and trusted performance for every bike that enters our workshop.</p>
+      <p class="recog-body">Aarti Auto Spare Parts is proudly recognized by <strong>industry leaders</strong> for delivering quality two-wheeler service and premium lubrication solutions. These appreciation certificates from Mobil and Motul reflect our commitment to maintaining high service standards, customer satisfaction, and trusted performance for every bike that enters our workshop.</p>
       <div class="recog-badges">
         <div class="recog-pill">✅ Quality Certified</div>
-        <div class="recog-pill">🛢️ Genuine Lubricants</div>
-        <div class="recog-pill">⭐ Mobil Approved</div>
+        <div class="recog-pill">🛢️ Premium Lubricants</div>
+        <div class="recog-pill">⭐ Industry Approved</div>
       </div>
     </div>
 
-    <!-- Right: Certificate image placeholder -->
+    <!-- Right: Certificate images -->
     <div class="recog-image-wrap">
-      <div class="recog-image-frame">
-        <div class="frame-corner frame-corner--tl"></div>
-        <div class="frame-corner frame-corner--tr"></div>
-        <div class="frame-corner frame-corner--bl"></div>
-        <div class="frame-corner frame-corner--br"></div>
-        <div class="recog-placeholder">
-          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="rgba(255,107,0,0.3)" stroke-width="1">
-            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
-          </svg>
-          <p class="recog-placeholder__text">Certificate Image</p>
-          <p class="recog-placeholder__sub">Replace with your Mobil certificate photo</p>
+      <div class="recog-cert-item">
+        <div class="recog-image-frame">
+          <div class="frame-corner frame-corner--tl"></div>
+          <div class="frame-corner frame-corner--tr"></div>
+          <div class="frame-corner frame-corner--bl"></div>
+          <div class="frame-corner frame-corner--br"></div>
+          <img src="certi.webp" alt="Mobil Appreciation Certificate" class="recog-image">
+          <div class="recog-image-glow"></div>
         </div>
-        <div class="recog-image-glow"></div>
+        <div class="recog-cert-label">
+          <span>🏅</span>
+          <span>Mobil Appreciation Certificate</span>
+        </div>
       </div>
-      <div class="recog-cert-label">
-        <span>🏅</span>
-        <span>Mobil Appreciation Certificate</span>
+
+      <div class="recog-cert-item">
+        <div class="recog-image-frame">
+          <div class="frame-corner frame-corner--tl"></div>
+          <div class="frame-corner frame-corner--tr"></div>
+          <div class="frame-corner frame-corner--bl"></div>
+          <div class="frame-corner frame-corner--br"></div>
+          <img src="motul-certi.webp" alt="Motul Appreciation Certificate" class="recog-image">
+          <div class="recog-image-glow"></div>
+        </div>
+        <div class="recog-cert-label">
+          <span>🏅</span>
+          <span>Motul Appreciation Certificate</span>
+        </div>
       </div>
     </div>
 
@@ -1730,100 +2267,99 @@
 <section class="services" id="services">
   <div class="section-header">
     <div>
-      <div class="section-tag">What We Do</div>
-      <h2 class="section-title">OUR<br>SERVICES</h2>
+      <div class="section-tag">Our Premium Service Packages</div>
+      <h2 class="section-title">SERVICE<br>PLANS</h2>
     </div>
-    <p class="section-desc">Bike & Auto — every job, every brand, every time. Built on precision and passion.</p>
+    <img src="special-offer-removebg-preview.png" alt="Special Offer" class="section-badge">
   </div>
 
-  <div class="services-grid">
+  <!-- SERVICES GRID -->
+  <div class="services-grid" style="grid-template-columns: repeat(2, 1fr);">
 
+    <!-- BIKE SERVICE -->
+
+    <!-- Comprehensive Bike Service -->
     <div class="service-card fade-up" style="transition-delay:0s">
-      <div class="service-num">01</div>
-      <div class="service-icon-wrap"><div class="service-icon">⚙️</div></div>
-      <div class="service-name">Engine Repair</div>
-      <p class="service-desc">Full teardown, diagnostics, and rebuild. We restore power, compression, and reliability back to your engine.</p>
-      <a href="https://wa.me/919594898909?text=Hi%20Aarti%20Bikers!%20I%20want%20to%20inquire%20about%20Engine%20Repair%20for%20my%20vehicle.%20Please%20let%20me%20know%20the%20availability%20and%20charges." target="_blank" class="service-link">Book Now</a>
+      <div class="service-header">
+        <div class="service-name">Bike Service</div>
+        <div class="service-duration">Complete Professional Service</div>
+      </div>
+
+      <div class="price-box">
+        <div class="price-amount">₹850/-</div>
+      </div>
+
+      <div class="service-body">
+        <h4 style="font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; color: var(--neon); margin-bottom: 1rem;">THIS SERVICE INCLUDES:</h4>
+        <ul class="service-list">
+          <li>Engine Oil Replacement</li>
+          <li>Brake Inspection</li>
+          <li>Air Filter Check</li>
+          <li>Brake/Clutch Oil Top-up</li>
+          <li>Battery Check</li>
+          <li>Chain Sprocket Tightening</li>
+          <li>Suspension Check</li>
+          <li>Oil Filter Check</li>
+          <li>Spark Plug Check</li>
+          <li>Greasing</li>
+          <li>Cables Check</li>
+          <li>Lights/Switches Checkup</li>
+          <li>Tyre Air Pressure</li>
+          <li>Coolant Check</li>
+          <li>Eco Foam Wash</li>
+          <li>Free Bike Polish</li>
+        </ul>
+        <div class="service-note">
+          <strong>Note:</strong> If additional work is required beyond the standard service, an extra labor charge will be applied.
+        </div>
+      </div>
+
+      <div class="service-footer">
+        <a href="https://wa.me/919594898909?text=Hi%20Aarti%20Bikers!%20I%20want%20to%20book%20a%20Bike%20Service.%20Please%20let%20me%20know%20availability." target="_blank" class="service-link">Book Now</a>
+      </div>
     </div>
 
-    <div class="service-card fade-up" style="transition-delay:0.06s">
-      <div class="service-num">02</div>
-      <div class="service-icon-wrap"><div class="service-icon">🔄</div></div>
-      <div class="service-name">Periodic Service</div>
-      <p class="service-desc">Scheduled maintenance — oil changes, filters, spark plugs, chain & sprockets — keeping your ride in peak shape.</p>
-      <a href="https://wa.me/919594898909?text=Hi%20Aarti%20Bikers!%20I%20want%20to%20inquire%20about%20a%20Periodic%20Service%20for%20my%20vehicle.%20Please%20let%20me%20know%20the%20availability%20and%20charges." target="_blank" class="service-link">Book Now</a>
-    </div>
+    <!-- SCOOTY SERVICE -->
 
-    <div class="service-card fade-up" style="transition-delay:0.12s">
-      <div class="service-num">03</div>
-      <div class="service-icon-wrap"><div class="service-icon">🎨</div></div>
-      <div class="service-name">Dent & Paint</div>
-      <p class="service-desc">Panel beating, dent removal, and show-quality paint jobs that make your machine look showroom-fresh again.</p>
-      <a href="https://wa.me/919594898909?text=Hi%20Aarti%20Bikers!%20I%20want%20to%20inquire%20about%20Dent%20%26%20Paint%20service%20for%20my%20vehicle.%20Please%20let%20me%20know%20the%20availability%20and%20charges." target="_blank" class="service-link">Book Now</a>
-    </div>
+    <!-- Comprehensive Scooty Service -->
+    <div class="service-card fade-up" style="transition-delay:0s">
+      <div class="service-header">
+        <div class="service-name">Scooty Service</div>
+        <div class="service-duration">Complete Professional Service</div>
+      </div>
 
-    <div class="service-card fade-up" style="transition-delay:0.18s">
-      <div class="service-num">04</div>
-      <div class="service-icon-wrap"><div class="service-icon">🏠</div></div>
-      <div class="service-name">Doorstep Service</div>
-      <p class="service-desc">We come to you. Routine maintenance and minor repairs done right at your home or office. Zero hassle.</p>
-      <a href="https://wa.me/919594898909?text=Hi%20Aarti%20Bikers!%20I%20want%20to%20inquire%20about%20your%20Doorstep%20Service.%20Please%20let%20me%20know%20the%20availability%20and%20charges%20for%20my%20area." target="_blank" class="service-link">Book Now</a>
-    </div>
+      <div class="price-box">
+        <div class="price-amount">₹749/-</div>
+      </div>
 
-    <div class="service-card fade-up" style="transition-delay:0.24s">
-      <div class="service-num">05</div>
-      <div class="service-icon-wrap"><div class="service-icon">🛞</div></div>
-      <div class="service-name">Wheel Care</div>
-      <p class="service-desc">Tyre fitting, balancing, wheel alignment, rim repair, and tubeless conversion for a smoother, safer ride.</p>
-      <a href="https://wa.me/919594898909?text=Hi%20Aarti%20Bikers!%20I%20want%20to%20inquire%20about%20Wheel%20Care%20service%20for%20my%20vehicle.%20Please%20let%20me%20know%20the%20availability%20and%20charges." target="_blank" class="service-link">Book Now</a>
-    </div>
+      <div class="service-body">
+        <h4 style="font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; color: var(--neon); margin-bottom: 1rem;">THIS SERVICE INCLUDES:</h4>
+        <ul class="service-list">
+          <li>Engine Oil Replacement</li>
+          <li>Brake Inspection</li>
+          <li>Air Filter Check</li>
+          <li>Brake Fluid Top-up</li>
+          <li>Battery Check</li>
+          <li>Belt Tension Checking</li>
+          <li>Suspension Check</li>
+          <li>Oil Filter Check</li>
+          <li>Spark Plug Check</li>
+          <li>Greasing</li>
+          <li>Cables Check</li>
+          <li>Lights/Switches Checkup</li>
+          <li>Tyre Air Pressure</li>
+          <li>Coolant Check</li>
+          <li>Eco Foam Wash</li>
+          <li>Free Polish</li>
+        </ul>
+        <div class="service-note">
+          <strong>Note:</strong> If additional work is required beyond the standard service, an extra labor charge will be applied.
+        </div>
+      </div>
 
-    <div class="service-card fade-up" style="transition-delay:0.30s">
-      <div class="service-num">06</div>
-      <div class="service-icon-wrap"><div class="service-icon">✨</div></div>
-      <div class="service-name">Detailing</div>
-      <p class="service-desc">Deep-clean, ceramic coat, polish and protect. We make your bike or car look better than the day it rolled out.</p>
-      <a href="https://wa.me/919594898909?text=Hi%20Aarti%20Bikers!%20I%20want%20to%20inquire%20about%20Detailing%20service%20for%20my%20vehicle.%20Please%20let%20me%20know%20the%20packages%20and%20charges." target="_blank" class="service-link">Book Now</a>
-    </div>
-
-    <div class="service-card fade-up" style="transition-delay:0.36s">
-      <div class="service-num">07</div>
-      <div class="service-icon-wrap"><div class="service-icon">🔨</div></div>
-      <div class="service-name">Accidental Repair</div>
-      <p class="service-desc">Crash damage restoration — frame alignment, body panels, paint match, and mechanical repair to get you back on the road.</p>
-      <a href="https://wa.me/919594898909?text=Hi%20Aarti%20Bikers!%20I%20want%20to%20inquire%20about%20Accidental%20Repair%20for%20my%20vehicle.%20Please%20let%20me%20know%20the%20next%20steps%20and%20an%20estimate." target="_blank" class="service-link">Book Now</a>
-    </div>
-
-    <div class="service-card fade-up" style="transition-delay:0.42s">
-      <div class="service-num">08</div>
-      <div class="service-icon-wrap"><div class="service-icon">🔋</div></div>
-      <div class="service-name">Batteries</div>
-      <p class="service-desc">Battery testing, replacement, and charging solutions for bikes, scooters, and cars. All major brands stocked.</p>
-      <a href="https://wa.me/919594898909?text=Hi%20Aarti%20Bikers!%20I%20want%20to%20inquire%20about%20Battery%20replacement%20or%20testing%20for%20my%20vehicle.%20Please%20let%20me%20know%20the%20available%20options." target="_blank" class="service-link">Book Now</a>
-    </div>
-
-    <div class="service-card fade-up" style="transition-delay:0.48s">
-      <div class="service-num">09</div>
-      <div class="service-icon-wrap"><div class="service-icon">🛒</div></div>
-      <div class="service-name">Buy Spare Parts</div>
-      <p class="service-desc">OEM and quality aftermarket parts for all bike and car brands. Get the right part at the right price, sourced fast.</p>
-      <a href="https://wa.me/919594898909?text=Hi%20Aarti%20Bikers!%20I%20want%20to%20inquire%20about%20purchasing%20Spare%20Parts%20for%20my%20vehicle.%20Please%20let%20me%20know%20availability%20and%20pricing." target="_blank" class="service-link">Shop Now</a>
-    </div>
-
-    <div class="service-card fade-up" style="transition-delay:0.54s">
-      <div class="service-num">10</div>
-      <div class="service-icon-wrap"><div class="service-icon">⚡</div></div>
-      <div class="service-name">EV Bike & Car Service</div>
-      <p class="service-desc">Specialized electric vehicle servicing — battery diagnostics, motor inspection, controller checks, and software updates.</p>
-      <a href="https://wa.me/919594898909?text=Hi%20Aarti%20Bikers!%20I%20want%20to%20inquire%20about%20EV%20Bike%20%26%20Car%20Service%20for%20my%20electric%20vehicle.%20Please%20let%20me%20know%20the%20availability%20and%20charges." target="_blank" class="service-link">Book Now</a>
-    </div>
-
-    <div class="service-card fade-up" style="transition-delay:0.60s; grid-column: span 2;">
-      <div class="service-num">11</div>
-      <div class="service-icon-wrap"><div class="service-icon">🪑</div></div>
-      <div class="service-name">Custom Interior</div>
-      <p class="service-desc">Seat upholstery, dashboard reskins, custom trims, audio upgrades, and full interior makeovers tailored to your taste. Cars and bikes both covered.</p>
-      <a href="https://wa.me/919594898909?text=Hi%20Aarti%20Bikers!%20I%20want%20to%20inquire%20about%20Custom%20Interior%20work%20for%20my%20vehicle.%20Please%20let%20me%20know%20the%20options%20and%20pricing." target="_blank" class="service-link">Book Now</a>
+      <div class="service-footer">
+        <a href="https://wa.me/919594898909?text=Hi%20Aarti%20Bikers!%20I%20want%20to%20book%20a%20Scooty%20Service.%20Please%20let%20me%20know%20availability." target="_blank" class="service-link">Book Now</a>
+      </div>
     </div>
 
   </div>
@@ -1832,41 +2368,30 @@
 <!-- ABOUT -->
 <section class="about" id="about">
   <div class="about-visual">
-    <div class="workshop-art"></div>
-    <div class="about-led"></div>
-
-    <!-- Workshop visual elements -->
-    <div class="workshop-overlay">
-      <div class="workshop-rack">
-        <div class="wrench-icon">🔧</div>
-        <div class="wrench-icon">🔩</div>
-        <div class="wrench-icon">🔧</div>
-        <div class="wrench-icon">⚙️</div>
-        <div class="wrench-icon">🔩</div>
-        <div class="wrench-icon">🔧</div>
+    <!-- Pinterest-style image grid -->
+    <div class="workshop-grid">
+      <div class="workshop-grid-item workshop-grid-item--large">
+        <img src="outside-grid.webp" alt="Bikes Outside" class="grid-image">
       </div>
-      <div></div>
-      <div class="workshop-floor">
-        <div class="oil-drum-row">
-          <div class="oil-drum"><div class="drum-label">OIL</div></div>
-          <div class="oil-drum"><div class="drum-label">FUEL</div></div>
-          <div class="oil-drum"><div class="drum-label">OIL</div></div>
-        </div>
+      <div class="workshop-grid-item">
+        <img src="tool-grid.webp" alt="Tools Collection" class="grid-image">
+      </div>
+      <div class="workshop-grid-item">
+        <img src="RE-grid.webp" alt="Royal Enfield" class="grid-image">
+      </div>
+      <div class="workshop-grid-item">
+        <img src="fz-grid.webp" alt="FZ Bike" class="grid-image">
+      </div>
+      <div class="workshop-grid-item">
+        <img src="shop-grid.webp" alt="Workshop Interior" class="grid-image">
       </div>
     </div>
-
-    <!-- Poster -->
-    <div class="workshop-poster">
-      <div class="poster-bike">🏍️</div>
-      <div class="poster-text">RIDE<br>HARD</div>
-    </div>
-
-    <!-- Glass office cabin -->
-    <div class="glass-cabin"></div>
   </div>
 
   <div class="about-content">
-    <div class="section-tag">The Workshop</div>
+    <div class="about-logo-wrap">
+      <img src="clean-arti-auto.png" alt="Aarti Auto Logo" class="about-logo">
+    </div>
     <h2 class="about-title">BUILT ON<br>GREASE &<br>GRIT</h2>
     <p class="about-body">Aarti Bikers was born from a single bay over two decades ago. Today, our facility blends the soul of an old-school mechanical garage with the precision of a modern workshop — exposed brick walls, worn concrete floors, and the smell of engine oil mixed with the glow of LED workstation lighting. With 25+ years of garage services and 11+ years dedicated to bike excellence, we're the trusted name riders swear by.</p>
     <ul class="feature-list">
@@ -1885,7 +2410,7 @@
       <div class="section-tag">Portfolio & Brands</div>
       <h2 class="section-title">BIKES WE<br>MASTER</h2>
     </div>
-    <p class="section-desc">From classic bullets to modern superbikes — we've wrenched on them all.</p>
+    <p class="section-desc work-desc">From timeless classics to cutting-edge superbikes — we've mastered them all.</p>
   </div>
 
   <!-- Featured builds grid -->
@@ -1906,7 +2431,7 @@
     <!-- Card 2 -->
     <div class="work-item work-item--placeholder">
       <div class="work-placeholder-img work-placeholder-img--logo">
-        <img src="bajaj-logo.svg" alt="Bajaj logo" class="work-item-logo" loading="lazy">
+        <img src="jawa-logo.jpg" alt="Jawa logo" class="work-item-logo" loading="lazy">
       </div>
       <div class="work-overlay"></div>
       <div class="work-info">
@@ -1918,7 +2443,7 @@
     <!-- Card 3 -->
     <div class="work-item work-item--placeholder">
       <div class="work-placeholder-img work-placeholder-img--logo">
-        <img src="hero-logo.svg" alt="Hero MotoCorp logo" class="work-item-logo" loading="lazy">
+        <img src="hero-black-logo.webp" alt="Hero MotoCorp logo" class="work-item-logo" loading="lazy">
       </div>
       <div class="work-overlay"></div>
       <div class="work-info">
@@ -1930,7 +2455,7 @@
     <!-- Card 4 -->
     <div class="work-item work-item--placeholder">
       <div class="work-placeholder-img work-placeholder-img--logo">
-        <img src="honda-logo.png" alt="Honda logo" class="work-item-logo" loading="lazy">
+        <img src="honda-white.jpg" alt="Honda logo" class="work-item-logo" loading="lazy">
       </div>
       <div class="work-overlay"></div>
       <div class="work-info">
@@ -1952,44 +2477,6 @@
     </div>
 
   </div>
-
-  <!-- Brand logos strip -->
-  <div style="margin-top:4rem;">
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:2rem;text-align:center;">All Brands We Service</div>
-    <div style="display:flex;flex-wrap:wrap;gap:0;border:1px solid rgba(240,235,227,0.06);">
-      <!-- Brand badge items -->
-      <div class="brand-badge">
-        <svg width="80" height="32" viewBox="0 0 80 32"><text x="4" y="22" font-family="Georgia,serif" font-size="13" font-weight="bold" fill="#C44B1B" letter-spacing="1">R.ENFIELD</text></svg>
-      </div>
-      <div class="brand-badge">
-        <svg width="70" height="32" viewBox="0 0 70 32"><text x="4" y="22" font-family="Arial Black" font-size="15" font-weight="900" fill="#0050A0" letter-spacing="1">BAJAJ</text></svg>
-      </div>
-      <div class="brand-badge">
-        <svg width="60" height="32" viewBox="0 0 60 32"><text x="4" y="22" font-family="Arial Black" font-size="15" font-weight="900" fill="#00AA44">HERO</text></svg>
-      </div>
-      <div class="brand-badge">
-        <svg width="80" height="32" viewBox="0 0 80 32"><text x="4" y="22" font-family="Arial Black" font-size="15" font-weight="900" fill="#CC0000" letter-spacing="1">HONDA</text></svg>
-      </div>
-      <div class="brand-badge">
-        <svg width="50" height="32" viewBox="0 0 50 32"><text x="3" y="22" font-family="Arial Black" font-size="15" font-weight="900" fill="#7700CC">TVS</text></svg>
-      </div>
-      <div class="brand-badge">
-        <svg width="80" height="32" viewBox="0 0 80 32"><text x="3" y="22" font-family="Arial Black" font-size="13" font-weight="900" fill="#E8820C">YAMAHA</text></svg>
-      </div>
-      <div class="brand-badge">
-        <svg width="80" height="32" viewBox="0 0 80 32"><text x="3" y="22" font-family="Arial Black" font-size="13" font-weight="900" fill="#4488FF">SUZUKI</text></svg>
-      </div>
-      <div class="brand-badge">
-        <svg width="70" height="32" viewBox="0 0 70 32"><text x="3" y="22" font-family="Arial Black" font-size="13" font-weight="900" fill="#FF4400">KTM</text></svg>
-      </div>
-      <div class="brand-badge">
-        <svg width="80" height="32" viewBox="0 0 80 32"><text x="3" y="22" font-family="Arial Black" font-size="12" font-weight="900" fill="#8A9BA8">KAWASAKI</text></svg>
-      </div>
-      <div class="brand-badge">
-        <svg width="80" height="32" viewBox="0 0 80 32"><text x="3" y="22" font-family="Arial Black" font-size="13" font-weight="900" fill="#AAAAAA">JAWA</text></svg>
-      </div>
-    </div>
-  </div>
 </section>
 
 <!-- TESTIMONIALS -->
@@ -2008,7 +2495,7 @@
       <p class="testimonial-text">"Brought my Thunderbird in after a nasty spill. They treated her like their own. The finish work is impeccable and she runs smoother than the day I bought her."</p>
       <div class="testimonial-author">
         <div class="author-avatar">RK</div>
-        <div>
+        <div class="author-info">
           <div class="author-name">Rahul Kapse</div>
           <div class="author-type">Royal Enfield Thunderbird 500</div>
         </div>
@@ -2019,7 +2506,7 @@
       <p class="testimonial-text">"The café racer build they did for me is exactly what I imagined. These guys actually listen. The workshop itself is something to see — proper atmosphere."</p>
       <div class="testimonial-author">
         <div class="author-avatar">PR</div>
-        <div>
+        <div class="author-info">
           <div class="author-name">Priya Rao</div>
           <div class="author-type">Custom Café Racer Build</div>
         </div>
@@ -2030,7 +2517,7 @@
       <p class="testimonial-text">"Third time coming back. Full restoration on my father's old Ambassador. They had period-correct parts sourced within a week. Absolutely legendary work."</p>
       <div class="testimonial-author">
         <div class="author-avatar">AM</div>
-        <div>
+        <div class="author-info">
           <div class="author-name">Arjun Mehta</div>
           <div class="author-type">Ambassador Classic Restoration</div>
         </div>
@@ -2141,10 +2628,12 @@
     <!-- Right: Eye-catching address card -->
     <div style="
       border: 1px solid rgba(255,107,0,0.25);
-      padding: 2rem 2.5rem;
+      padding: clamp(1.2rem, 4vw, 2rem) clamp(1.1rem, 5vw, 2.5rem);
       position: relative;
       overflow: hidden;
-      min-width: 320px;
+      min-width: min(320px, 100%);
+      width: 100%;
+      max-width: 460px;
       background: rgba(255,107,0,0.03);
     ">
       <!-- orange corner accent -->
@@ -2153,7 +2642,7 @@
 
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:5px;text-transform:uppercase;color:var(--neon);margin-bottom:1.2rem;">📍 Find Us Here</div>
 
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px;color:var(--white);line-height:1.3;margin-bottom:0.4rem;">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1.12rem, 5.5vw, 1.5rem);letter-spacing:1.5px;color:var(--white);line-height:1.3;margin-bottom:0.4rem;">
         Shop No. 4, Centre Point Tower
       </div>
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:400;letter-spacing:2px;color:var(--steel);margin-bottom:1.6rem;">
@@ -2166,7 +2655,7 @@
       <a href="tel:+919594898909" style="display:flex;align-items:center;gap:0.8rem;text-decoration:none;margin-bottom:0.8rem;group:true;">
         <div style="width:34px;height:34px;background:rgba(255,107,0,0.1);border:1px solid rgba(255,107,0,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;">📞</div>
         <div>
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:3px;color:var(--neon);">+91 95948 98909</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1rem, 5vw, 1.3rem);letter-spacing:2px;color:var(--neon);">+91 95948 98909</div>
           <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:3px;color:var(--muted);text-transform:uppercase;">WhatsApp & Calls</div>
         </div>
       </a>
@@ -2175,7 +2664,7 @@
       <a href="tel:+919773328777" style="display:flex;align-items:center;gap:0.8rem;text-decoration:none;">
         <div style="width:34px;height:34px;background:rgba(255,107,0,0.07);border:1px solid rgba(255,107,0,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;">📱</div>
         <div>
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:3px;color:var(--amber);">+91 97733 28777</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(1rem, 5vw, 1.3rem);letter-spacing:2px;color:var(--amber);">+91 97733 28777</div>
           <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:3px;color:var(--muted);text-transform:uppercase;">Alternate Line</div>
         </div>
       </a>
@@ -2325,6 +2814,19 @@
     0%   { box-shadow: 0 4px 20px rgba(37,211,102,0.5), 0 0 0 0 rgba(37,211,102,0.35); }
     70%  { box-shadow: 0 4px 20px rgba(37,211,102,0.5), 0 0 0 18px rgba(37,211,102,0); }
     100% { box-shadow: 0 4px 20px rgba(37,211,102,0.5), 0 0 0 0 rgba(37,211,102,0); }
+  }
+
+  @media (max-width: 768px) {
+    #floatWA {
+      width: 52px;
+      height: 52px;
+      bottom: 1rem;
+      right: 1rem;
+    }
+    #floatWA svg {
+      width: 24px;
+      height: 24px;
+    }
   }
 </style>
 
